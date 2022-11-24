@@ -53,6 +53,7 @@ namespace BatchRenamer
                 string fileNum = AddLeadingZero(file.index + 1);
                 string fileExtension = Path.GetExtension(file.name);
                 string newFileName = Path.Combine(userPath, ($"{filePrefix} " + fileNum + fileExtension));
+                Console.WriteLine("TESTING");
                 File.Move(file.name, newFileName);
                 //Console.WriteLine(newFileName);
             }
