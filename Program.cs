@@ -27,7 +27,7 @@ namespace BatchRenamer
             if (CheckArgs(userPath, filePrefix, folderPrefix, startingPoint))
             {
                 //Checks if there are more directories or not
-                if(GetDirectories(userPath).Length != 0)
+                if (GetDirectories(userPath).Length != 0)
                 {
                     RenameDirectories(userPath, filePrefix, folderPrefix, startingPoint);
                 }
@@ -52,10 +52,9 @@ namespace BatchRenamer
             {
                 string fileNum = AddLeadingZero(file.index + 1);
                 string fileExtension = Path.GetExtension(file.name);
-                string newFileName = Path.Combine(userPath, ($"{filePrefix} " + fileNum + fileExtension));
-                Console.WriteLine("TESTING");
+                string folderName = GetLastDirectoryName(userPath);
+                string newFileName = Path.Combine(userPath, ($"{folderName}{filePrefix}" + fileNum + fileExtension));
                 File.Move(file.name, newFileName);
-                //Console.WriteLine(newFileName);
             }
         }
         /// <summary>
@@ -66,7 +65,7 @@ namespace BatchRenamer
             foreach (var directory in GetDirectories(userPath).Select((name, index) => (name, index)))
             {
                 string directoryNum = AddLeadingZero(directory.index + int.Parse(startingPoint));
-                string newPath = Path.Combine(userPath, ($"{folderPrefix} " + directoryNum));
+                string newPath = Path.Combine(userPath, ($"{folderPrefix}" + directoryNum));
 
                 //Check if directory exists
                 if (Directory.Exists(directory.name) && (directory.name != newPath))
@@ -85,6 +84,13 @@ namespace BatchRenamer
         static string[] GetDirectories(string userPath)
         {
             return Directory.GetDirectories(userPath, "*", SearchOption.TopDirectoryOnly);
+        }
+        /// <summary>
+        /// Returns a string of the folder the file will be contained in.
+        /// </summary>
+        static string GetLastDirectoryName(string userPath)
+        {
+            return new DirectoryInfo(userPath).Name;
         }
         /// <summary>
         /// Returns a string array with the files in the location <i>directoryPath</i>.
