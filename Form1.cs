@@ -43,6 +43,10 @@ namespace BatchRenamer
         {
             return (string)comboBox3.SelectedItem;
         }
+        public string getFileExtension()
+        {
+            return (string)comboBox4_fileExtension.SelectedItem;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -60,6 +64,7 @@ namespace BatchRenamer
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
+            comboBox4_fileExtension.SelectedIndex = 0;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

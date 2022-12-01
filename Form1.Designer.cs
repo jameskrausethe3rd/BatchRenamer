@@ -40,6 +40,8 @@ namespace BatchRenamer
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBox4_fileExtension = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btn_OpenFolder
@@ -155,12 +157,43 @@ namespace BatchRenamer
             this.label4.TabIndex = 9;
             this.label4.Text = "Starting Season Number";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(152, 87);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(141, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Rename files with extension:";
+            // 
+            // comboBox4_fileExtension
+            // 
+            this.comboBox4_fileExtension.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBox4_fileExtension.FormattingEnabled = true;
+            this.comboBox4_fileExtension.Items.AddRange(new object[] {
+            "avi",
+            "flv",
+            "f4v",
+            "mkv",
+            "mp4",
+            "mov",
+            "mp3",
+            "swf",
+            "webm",
+            "wmv"});
+            this.comboBox4_fileExtension.Location = new System.Drawing.Point(155, 103);
+            this.comboBox4_fileExtension.Name = "comboBox4_fileExtension";
+            this.comboBox4_fileExtension.Size = new System.Drawing.Size(133, 21);
+            this.comboBox4_fileExtension.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(300, 215);
+            this.Controls.Add(this.comboBox4_fileExtension);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.btn_rename);
@@ -194,6 +227,8 @@ namespace BatchRenamer
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBox4_fileExtension;
     }
 }
 
