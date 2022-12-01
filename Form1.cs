@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,6 +80,26 @@ namespace BatchRenamer
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            lbl_userSelection.Text = FileList[0];
+            setUserPath(FileList[0]);
+        }
+
+        private void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            DragDropEffects effects = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var path = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+                if (Directory.Exists(path))
+                    effects = DragDropEffects.Copy;
+            }
+
+            e.Effect = effects;
         }
     }
 }
