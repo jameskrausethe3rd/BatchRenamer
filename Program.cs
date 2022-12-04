@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static BatchRenamer.Form1;
 
 namespace BatchRenamer
 {
@@ -22,18 +23,18 @@ namespace BatchRenamer
         /// <summary>
         /// Renames the files and folders in the selected directory. Checks if it is a nested folder, then renames the files accordingly
         /// </summary>
-        public void Rename(string userPath, string filePrefix, string folderPrefix, string startingPoint, string selectedFileExtension)
+        public void Rename(UserParams p)
         {
-            if (CheckArgs(userPath, filePrefix, folderPrefix, startingPoint))
+            if (CheckArgs(p))
             {
                 //Checks if there are more directories or not
-                if (GetDirectories(userPath).Length != 0)
+                if (GetDirectories(p.userPath).Length != 0)
                 {
-                    RenameDirectories(userPath, filePrefix, folderPrefix, startingPoint, selectedFileExtension);
+                    RenameDirectories(p);
                 }
                 else
                 {
-                    RenameFiles(userPath, filePrefix, selectedFileExtension);
+                    RenameFiles(p);
                 }
                 MessageBox.Show("Files renamed!");
             }
@@ -45,27 +46,27 @@ namespace BatchRenamer
         /// <summary>
         /// Renames the files in the <i>userPath</i> using the <i>filePrefix</i>.
         /// </summary>
-        static void RenameFiles(string userPath, string filePrefix, string selectedFileExtension)
+        static void RenameFiles(UserParams p)
         {
             //Loop through each file
-            foreach (var file in GetFiles(userPath, selectedFileExtension).Select((name, index) => (name, index)))
+            foreach (var file in GetFiles(p).Select((name, index) => (name, index)))
             {
                 string fileNum = AddLeadingZero(file.index + 1);
                 string fileExtension = Path.GetExtension(file.name);
-                string folderName = GetLastDirectoryName(userPath);
-                string newFileName = Path.Combine(userPath, ($"{folderName}{filePrefix}" + fileNum + fileExtension));
+                string folderName = GetLastDirectoryName(p.userPath);
+                string newFileName = Path.Combine(p.userPath, ($"{folderName}{p.filePrefix}" + fileNum + fileExtension));
                 File.Move(file.name, newFileName);
             }
         }
         /// <summary>
         /// Renames the directories in the <i>userPath</i> using the <i>folderPrefix</i>. Calls <i>RenameFiles</i> to rename the files in the directory.
         /// </summary>
-        static void RenameDirectories(string userPath, string filePrefix, string folderPrefix, string startingPoint, string selectedFileExtension)
+        static void RenameDirectories(UserParams p)
         {
-            foreach (var directory in GetDirectories(userPath).Select((name, index) => (name, index)))
+            foreach (var directory in GetDirectories(p.userPath).Select((name, index) => (name, index)))
             {
-                string directoryNum = AddLeadingZero(directory.index + int.Parse(startingPoint));
-                string newPath = Path.Combine(userPath, ($"{folderPrefix}" + directoryNum));
+                string directoryNum = AddLeadingZero(directory.index + int.Parse(p.startingNumber));
+                string newPath = Path.Combine(p.userPath, ($"{p.folderPrefix}" + directoryNum));
 
                 //Check if directory exists
                 if (Directory.Exists(directory.name) && (directory.name != newPath))
@@ -73,8 +74,13 @@ namespace BatchRenamer
                     Directory.Move(directory.name, newPath);
                 }
 
-                //Loop through each file
-                RenameFiles(newPath, filePrefix, selectedFileExtension);
+                //Saves the current path, updates the <i>userPath</i> for <i>p</i>, renames the files, then sets <i>userPath</i> back to <i>oldPath</i>.
+                //This is done because if we just update the path, the folders will be nested in each other. And making a second object just for path takes
+                //more memory.
+                string oldPath = p.userPath;
+                p.userPath = newPath;
+                RenameFiles(p);
+                p.userPath = oldPath;
             }
         }
         /// <summary>
@@ -94,26 +100,26 @@ namespace BatchRenamer
         /// <summary>
         /// Returns a string array with the files in the location <i>directoryPath</i>.
         /// </summary>
-        static string[] GetFiles(string directoryPath, string selectedFileExtension)
+        static string[] GetFiles(UserParams p)
         {
-            return Directory.GetFiles(directoryPath, "*" + selectedFileExtension, SearchOption.AllDirectories);
+            return Directory.GetFiles(p.userPath, "*" + p.fileExtension, SearchOption.AllDirectories);
         }
         /// <summary>
         /// Checks the parameters given from the user to make sure none of them will cause errors.
         /// </summary>
-        static bool CheckArgs(string userPath, string filePrefix, string folderPrefix, string startingPoint)
+        static bool CheckArgs(UserParams p)
         {
-            if (userPath != "" && filePrefix != "" && folderPrefix != "" && startingPoint != "")
+            if (p.userPath != "" && p.filePrefix != "" && p.folderPrefix != "" && p.startingNumber != "")
             {
-                if (filePrefix.Contains(@"\") || filePrefix.Contains(@"/"))
+                if (p.filePrefix.Contains(@"\") || p.filePrefix.Contains(@"/"))
                 {
                     return false;
                 }
-                if (folderPrefix.Contains(@"\") || folderPrefix.Contains(@"/"))
+                if (p.folderPrefix.Contains(@"\") || p.folderPrefix.Contains(@"/"))
                 {
                     return false;
                 }
-                if (startingPoint.Contains(@"\") || startingPoint.Contains(@"/"))
+                if (p.startingNumber.Contains(@"\") || p.startingNumber.Contains(@"/"))
                 {
                     return false;
                 }
