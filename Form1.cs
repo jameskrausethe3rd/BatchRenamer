@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static BatchRenamer.Program;
 
 namespace BatchRenamer
 {
@@ -43,6 +44,10 @@ namespace BatchRenamer
         {
             return (string)comboBox3.SelectedItem;
         }
+        public string getFileExtension()
+        {
+            return (string)comboBox4_fileExtension.SelectedItem;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -52,6 +57,7 @@ namespace BatchRenamer
             {
                 lbl_userSelection.Text = fbd.SelectedPath;
                 setUserPath(fbd.SelectedPath);
+                comboBox4_fileExtension.DataSource = GetFileExtensions(fbd.SelectedPath);
             }
         }
 
@@ -74,7 +80,7 @@ namespace BatchRenamer
 
         private void btn_rename_Click(object sender, EventArgs e)
         {
-            otherFunctions.Rename(getUserPath(), getFilePrefix(), getFolderPrefix(), getStartingNumber());
+            otherFunctions.Rename(getUserPath(), getFilePrefix(), getFolderPrefix(), getStartingNumber(), getFileExtension());
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)

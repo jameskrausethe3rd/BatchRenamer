@@ -22,18 +22,18 @@ namespace BatchRenamer
         /// <summary>
         /// Renames the files and folders in the selected directory. Checks if it is a nested folder, then renames the files accordingly
         /// </summary>
-        public void Rename(string userPath, string filePrefix, string folderPrefix, string startingPoint)
+        public void Rename(string userPath, string filePrefix, string folderPrefix, string startingPoint, string selectedFileExtension)
         {
             if (CheckArgs(userPath, filePrefix, folderPrefix, startingPoint))
             {
                 //Checks if there are more directories or not
                 if (GetDirectories(userPath).Length != 0)
                 {
-                    RenameDirectories(userPath, filePrefix, folderPrefix, startingPoint);
+                    RenameDirectories(userPath, filePrefix, folderPrefix, startingPoint, selectedFileExtension);
                 }
                 else
                 {
-                    RenameFiles(userPath, filePrefix);
+                    RenameFiles(userPath, filePrefix, selectedFileExtension);
                 }
                 MessageBox.Show("Files renamed!");
             }
@@ -45,10 +45,10 @@ namespace BatchRenamer
         /// <summary>
         /// Renames the files in the <i>userPath</i> using the <i>filePrefix</i>.
         /// </summary>
-        static void RenameFiles(string userPath, string filePrefix)
+        static void RenameFiles(string userPath, string filePrefix, string selectedFileExtension)
         {
             //Loop through each file
-            foreach (var file in GetFiles(userPath).Select((name, index) => (name, index)))
+            foreach (var file in GetFiles(userPath, selectedFileExtension).Select((name, index) => (name, index)))
             {
                 string fileNum = AddLeadingZero(file.index + 1);
                 string fileExtension = Path.GetExtension(file.name);
@@ -60,7 +60,7 @@ namespace BatchRenamer
         /// <summary>
         /// Renames the directories in the <i>userPath</i> using the <i>folderPrefix</i>. Calls <i>RenameFiles</i> to rename the files in the directory.
         /// </summary>
-        static void RenameDirectories(string userPath, string filePrefix, string folderPrefix, string startingPoint)
+        static void RenameDirectories(string userPath, string filePrefix, string folderPrefix, string startingPoint, string selectedFileExtension)
         {
             foreach (var directory in GetDirectories(userPath).Select((name, index) => (name, index)))
             {
@@ -71,11 +71,10 @@ namespace BatchRenamer
                 if (Directory.Exists(directory.name) && (directory.name != newPath))
                 {
                     Directory.Move(directory.name, newPath);
-                    //Console.WriteLine("Folder Renamed.");
                 }
 
                 //Loop through each file
-                RenameFiles(newPath, filePrefix);
+                RenameFiles(newPath, filePrefix, selectedFileExtension);
             }
         }
         /// <summary>
@@ -95,9 +94,9 @@ namespace BatchRenamer
         /// <summary>
         /// Returns a string array with the files in the location <i>directoryPath</i>.
         /// </summary>
-        static string[] GetFiles(string directoryPath)
+        static string[] GetFiles(string directoryPath, string selectedFileExtension)
         {
-            return Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
+            return Directory.GetFiles(directoryPath, "*" + selectedFileExtension, SearchOption.AllDirectories);
         }
         /// <summary>
         /// Checks the parameters given from the user to make sure none of them will cause errors.
@@ -139,6 +138,36 @@ namespace BatchRenamer
             }
 
             return output;
+        }
+        /// <summary>
+        /// Gets a list of all the file extensions in the selected folder to populate the File Extension dropdown.
+        /// </summary>       
+        public static List<string> GetFileExtensions(string userPath)
+        {
+            HashSet<string> fileExtensions = new HashSet<string>();
+
+            void LoopThroughFiles()
+            {
+                foreach (var file in Directory.GetFiles(userPath, "*", SearchOption.AllDirectories))
+                {
+                    string fileExtension = Path.GetExtension(file);
+                    fileExtensions.Add(fileExtension);
+                }
+            }
+
+            //Checks if there are more directories or not
+            if (GetDirectories(userPath).Length != 0)
+            {
+                foreach (var directory in GetDirectories(userPath))
+                {
+                    LoopThroughFiles();
+                }
+            }
+            else
+            {
+                LoopThroughFiles();
+            }
+            return fileExtensions.ToList();
         }
     }
 }
