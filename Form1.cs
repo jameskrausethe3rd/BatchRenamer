@@ -24,6 +24,30 @@ namespace BatchRenamer
         {
             InitializeComponent();
         }
+        public class UserParams
+        {
+            public string userPath { get; set; }
+            public string filePrefix { get; set; }
+            public string folderPrefix { get; set; }
+            public string startingNumber { get; set; }
+            public string fileExtension { get; set; }
+
+            public UserParams() { }
+
+            public UserParams(UserParams other)
+            {
+                this.userPath = other.userPath;
+                this.filePrefix = other.filePrefix;
+                this.folderPrefix = other.folderPrefix;
+                this.startingNumber = other.startingNumber;
+                this.fileExtension = other.fileExtension;
+            }
+
+            public static UserParams GetInstance(UserParams p)
+            {
+                return new UserParams(p);
+            }
+        }
         private void setUserPath(string userPath)
         {
             UserPath = userPath;
@@ -80,7 +104,15 @@ namespace BatchRenamer
 
         private void btn_rename_Click(object sender, EventArgs e)
         {
-            otherFunctions.Rename(getUserPath(), getFilePrefix(), getFolderPrefix(), getStartingNumber(), getFileExtension());
+            UserParams p = new UserParams() {
+                userPath = getUserPath(),
+                filePrefix = getFilePrefix(),
+                folderPrefix = getFolderPrefix(),
+                startingNumber = getStartingNumber(),
+                fileExtension = getFileExtension()
+            };
+
+            otherFunctions.Rename(p);
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -107,5 +139,6 @@ namespace BatchRenamer
 
             e.Effect = effects;
         }
+
     }
 }
