@@ -102,7 +102,14 @@ namespace BatchRenamer
         /// </summary>
         static string[] GetFiles(UserParams p)
         {
-            return Directory.GetFiles(p.userPath, "*" + p.fileExtension, SearchOption.AllDirectories);
+            if (p.fileExtension == "All")
+            {
+                return Directory.GetFiles(p.userPath, "*", SearchOption.AllDirectories);
+            }
+            else
+            {
+                return Directory.GetFiles(p.userPath, "*" + p.fileExtension, SearchOption.AllDirectories);
+            }
         }
         /// <summary>
         /// Checks the parameters given from the user to make sure none of them will cause errors.
@@ -150,7 +157,7 @@ namespace BatchRenamer
         /// </summary>       
         public static List<string> GetFileExtensions(string userPath)
         {
-            HashSet<string> fileExtensions = new HashSet<string>();
+            HashSet<string> fileExtensions = new HashSet<string>() {"All"};
 
             void LoopThroughFiles()
             {
