@@ -170,17 +170,6 @@ namespace BatchRenamer
             // 
             this.comboBox4_fileExtension.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox4_fileExtension.FormattingEnabled = true;
-            this.comboBox4_fileExtension.Items.AddRange(new object[] {
-            "avi",
-            "flv",
-            "f4v",
-            "mkv",
-            "mp4",
-            "mov",
-            "mp3",
-            "swf",
-            "webm",
-            "wmv"});
             this.comboBox4_fileExtension.Location = new System.Drawing.Point(155, 103);
             this.comboBox4_fileExtension.Name = "comboBox4_fileExtension";
             this.comboBox4_fileExtension.Size = new System.Drawing.Size(133, 21);
