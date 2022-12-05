@@ -81,7 +81,9 @@ namespace BatchRenamer
             {
                 lbl_userSelection.Text = fbd.SelectedPath;
                 setUserPath(fbd.SelectedPath);
+                comboBox4_fileExtension.Enabled = true;
                 comboBox4_fileExtension.DataSource = GetFileExtensions(fbd.SelectedPath);
+                ListDirectory(treeView1, UserPath);
             }
         }
 
@@ -90,16 +92,6 @@ namespace BatchRenamer
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void lbl_userSelection_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btn_rename_Click(object sender, EventArgs e)
@@ -114,12 +106,6 @@ namespace BatchRenamer
 
             otherFunctions.Rename(p);
         }
-
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
@@ -139,6 +125,43 @@ namespace BatchRenamer
 
             e.Effect = effects;
         }
+        private void ListDirectory(TreeView treeView, string path)
+        {
+            treeView.Nodes.Clear();
+            treeView.Nodes.Add(CreateDirectoryNode(path));
+        }
 
+        private TreeNode CreateDirectoryNode(string path)
+        {
+            string selectedFileExtension = getFileExtension();
+
+            if(selectedFileExtension == "All")
+            {
+                selectedFileExtension = "";
+            }
+
+            var directoryNode = new TreeNode(new DirectoryInfo(path).Name);
+            foreach (var folder in Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly).Select((name, index) => (name, index)))
+            {
+                string test = getFolderPrefix() + folder.index.ToString();
+                directoryNode.Nodes.Add(CreateDirectoryNode(folder.name));
+            }
+            foreach (var file in Directory.GetFiles(path, "*" + selectedFileExtension, SearchOption.TopDirectoryOnly).Select((name, index) => (name, index)))
+            {
+                Console.WriteLine(file.name);
+                //directoryNode.Nodes.Add(new TreeNode(file.index.ToString()));
+                directoryNode.Nodes.Add(new TreeNode(new DirectoryInfo(file.name).Name));
+            }
+            return directoryNode;
+        }
+        private void CreateFileNode(TreeNode directoryNode, string path, int folderIndex)
+        {
+
+        }
+
+        private void comboBox4_fileExtension_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListDirectory(treeView1, UserPath);
+        }
     }
 }
