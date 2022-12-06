@@ -68,6 +68,7 @@ namespace BatchRenamer
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(138, 21);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -98,6 +99,7 @@ namespace BatchRenamer
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(138, 21);
             this.comboBox2.TabIndex = 4;
+            this.comboBox2.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -146,6 +148,7 @@ namespace BatchRenamer
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(138, 21);
             this.comboBox3.TabIndex = 8;
+            this.comboBox3.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -174,7 +177,7 @@ namespace BatchRenamer
             this.comboBox4_fileExtension.Name = "comboBox4_fileExtension";
             this.comboBox4_fileExtension.Size = new System.Drawing.Size(138, 21);
             this.comboBox4_fileExtension.TabIndex = 11;
-            this.comboBox4_fileExtension.SelectedIndexChanged += new System.EventHandler(this.comboBox4_fileExtension_SelectedIndexChanged);
+            this.comboBox4_fileExtension.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label6
             // 
