@@ -42,13 +42,15 @@ namespace BatchRenamer
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBox4_fileExtension = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // btn_OpenFolder
             // 
             this.btn_OpenFolder.Location = new System.Drawing.Point(12, 12);
             this.btn_OpenFolder.Name = "btn_OpenFolder";
-            this.btn_OpenFolder.Size = new System.Drawing.Size(133, 39);
+            this.btn_OpenFolder.Size = new System.Drawing.Size(153, 39);
             this.btn_OpenFolder.TabIndex = 0;
             this.btn_OpenFolder.Text = "Open Folder";
             this.btn_OpenFolder.UseVisualStyleBackColor = true;
@@ -64,9 +66,9 @@ namespace BatchRenamer
             "Season"});
             this.comboBox1.Location = new System.Drawing.Point(12, 103);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(138, 21);
             this.comboBox1.TabIndex = 1;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -95,8 +97,9 @@ namespace BatchRenamer
             "Episode"});
             this.comboBox2.Location = new System.Drawing.Point(12, 143);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.Size = new System.Drawing.Size(138, 21);
             this.comboBox2.TabIndex = 4;
+            this.comboBox2.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -115,13 +118,12 @@ namespace BatchRenamer
             this.lbl_userSelection.Size = new System.Drawing.Size(122, 13);
             this.lbl_userSelection.TabIndex = 6;
             this.lbl_userSelection.Text = "Please make a selection";
-            this.lbl_userSelection.Click += new System.EventHandler(this.lbl_userSelection_Click);
             // 
             // btn_rename
             // 
-            this.btn_rename.Location = new System.Drawing.Point(155, 12);
+            this.btn_rename.Location = new System.Drawing.Point(180, 12);
             this.btn_rename.Name = "btn_rename";
-            this.btn_rename.Size = new System.Drawing.Size(133, 39);
+            this.btn_rename.Size = new System.Drawing.Size(153, 39);
             this.btn_rename.TabIndex = 7;
             this.btn_rename.Text = "Rename";
             this.btn_rename.UseVisualStyleBackColor = true;
@@ -144,9 +146,9 @@ namespace BatchRenamer
             "10"});
             this.comboBox3.Location = new System.Drawing.Point(12, 183);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
+            this.comboBox3.Size = new System.Drawing.Size(138, 21);
             this.comboBox3.TabIndex = 8;
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            this.comboBox3.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -160,7 +162,7 @@ namespace BatchRenamer
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(152, 87);
+            this.label5.Location = new System.Drawing.Point(9, 207);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(141, 13);
             this.label5.TabIndex = 10;
@@ -168,19 +170,40 @@ namespace BatchRenamer
             // 
             // comboBox4_fileExtension
             // 
+            this.comboBox4_fileExtension.Enabled = false;
             this.comboBox4_fileExtension.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox4_fileExtension.FormattingEnabled = true;
-            this.comboBox4_fileExtension.Location = new System.Drawing.Point(155, 103);
+            this.comboBox4_fileExtension.Location = new System.Drawing.Point(12, 223);
             this.comboBox4_fileExtension.Name = "comboBox4_fileExtension";
-            this.comboBox4_fileExtension.Size = new System.Drawing.Size(133, 21);
+            this.comboBox4_fileExtension.Size = new System.Drawing.Size(138, 21);
             this.comboBox4_fileExtension.TabIndex = 11;
+            this.comboBox4_fileExtension.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(177, 87);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Preview:";
+            // 
+            // treeView1
+            // 
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeView1.Location = new System.Drawing.Point(180, 103);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(153, 141);
+            this.treeView1.TabIndex = 13;
             // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 215);
+            this.ClientSize = new System.Drawing.Size(345, 258);
+            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.comboBox4_fileExtension);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -218,6 +241,8 @@ namespace BatchRenamer
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBox4_fileExtension;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 
