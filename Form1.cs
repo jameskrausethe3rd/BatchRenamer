@@ -154,7 +154,8 @@ namespace BatchRenamer
             foreach (var file in Directory.GetFiles(path, "*" + selectedFileExtension, SearchOption.TopDirectoryOnly).Select((name, index) => (name, index)))
             {
                 string fileNum = AddLeadingZero(file.index+1);
-                directoryNode.Nodes.Add(new TreeNode(directoryNode.Text + getFilePrefix() + fileNum));
+                string currentFileExtension = Path.GetExtension(file.name);
+                directoryNode.Nodes.Add(new TreeNode(directoryNode.Text + getFilePrefix() + fileNum + currentFileExtension));
             }
             return directoryNode;
         }
