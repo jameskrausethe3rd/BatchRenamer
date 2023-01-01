@@ -108,9 +108,6 @@ namespace BatchRenamer
             string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             lbl_userSelection.Text = FileList[0];
             setUserPath(FileList[0]);
-            comboBox4_fileExtension.Enabled = true;
-            comboBox4_fileExtension.DataSource = GetFileExtensions(FileList[0]);
-            ListDirectory(treeView1, UserPath);
         }
         private void Form1_DragEnter(object sender, DragEventArgs e)
         {
