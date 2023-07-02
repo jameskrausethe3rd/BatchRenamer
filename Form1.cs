@@ -29,8 +29,6 @@ namespace BatchRenamer
             public string userPath { get; set; }
             public string filePrefix { get; set; }
             public string folderPrefix { get; set; }
-            public string fileSeasonPrefix { get; set; }
-            public string showName { get; set; }
             public string startingNumber { get; set; }
             public string fileExtension { get; set; }
 
@@ -58,29 +56,21 @@ namespace BatchRenamer
         {
             return UserPath;
         }
-        public string getFileEpisodePrefix()
+        public string getFilePrefix()
         {
-            return (string)fileEpisodePrefix.SelectedItem;
-        }
-        public string getFileSeasonPrefix()
-        {
-            return (string)fileSeasonPrefix.SelectedItem;
+            return (string)comboBox2.SelectedItem;
         }
         public string getFolderPrefix()
         {
-            return (string)folderSeasonPrefix.SelectedItem;
+            return (string)comboBox1.SelectedItem;
         }
         public string getStartingNumber()
         {
-            return (string)startSeasonNumber.SelectedItem;
+            return (string)comboBox3.SelectedItem;
         }
         public string getFileExtension()
         {
-            return (string)fileExtension.SelectedItem;
-        }
-        private string getShowName()
-        {
-            return (string)showName.Text;
+            return (string)comboBox4_fileExtension.SelectedItem;
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -90,28 +80,25 @@ namespace BatchRenamer
             {
                 lbl_userSelection.Text = fbd.SelectedPath;
                 setUserPath(fbd.SelectedPath);
-                fileExtension.Enabled = true;
-                fileExtension.DataSource = GetFileExtensions(fbd.SelectedPath);
+                comboBox4_fileExtension.Enabled = true;
+                comboBox4_fileExtension.DataSource = GetFileExtensions(fbd.SelectedPath);
                 ListDirectory(treeView1, UserPath);
             }
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            folderSeasonPrefix.SelectedIndex = 2;
-            fileEpisodePrefix.SelectedIndex = 0;
-            startSeasonNumber.SelectedIndex = 0;
-            fileSeasonPrefix.SelectedIndex = 0;
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
+            comboBox3.SelectedIndex = 0;
         }
         private void btn_rename_Click(object sender, EventArgs e)
         {
             UserParams p = new UserParams() {
                 userPath = getUserPath(),
-                filePrefix = getFileEpisodePrefix(),
+                filePrefix = getFilePrefix(),
                 folderPrefix = getFolderPrefix(),
-                showName = getShowName(),
                 startingNumber = getStartingNumber(),
-                fileExtension = getFileExtension(),
-                fileSeasonPrefix = getFileSeasonPrefix()
+                fileExtension = getFileExtension()
             };
 
             otherFunctions.Rename(p);
@@ -119,22 +106,12 @@ namespace BatchRenamer
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            string dragDropFolder = getDragDropFolder(FileList);
-            showName.AutoCompleteCustomSource.Add(dragDropFolder);
-            showName.Text = dragDropFolder;
             lbl_userSelection.Text = FileList[0];
             setUserPath(FileList[0]);
-            fileExtension.Enabled = true;
-            fileExtension.DataSource = GetFileExtensions(FileList[0]);
+            comboBox4_fileExtension.Enabled = true;
+            comboBox4_fileExtension.DataSource = GetFileExtensions(FileList[0]);
             ListDirectory(treeView1, UserPath);
         }
-
-        private string getDragDropFolder(string[] fileList)
-        {
-            string path = fileList[0];
-            return new DirectoryInfo(path).Name;
-        }
-
         private void Form1_DragEnter(object sender, DragEventArgs e)
         {
             DragDropEffects effects = DragDropEffects.None;
@@ -152,7 +129,7 @@ namespace BatchRenamer
             treeView.Nodes.Clear();
             treeView.Nodes.Add(CreateDirectoryNode(path));
         }
-        private TreeNode CreateDirectoryNode(string path, int folderIndex = 0, string folderSeasonNumber = "")
+        private TreeNode CreateDirectoryNode(string path, int folderIndex = 0)
         {
             string selectedFileExtension = getFileExtension();
             TreeNode directoryNode;
@@ -170,18 +147,18 @@ namespace BatchRenamer
             else
             {
                 string folderIndexString = AddLeadingZero(folderIndex);
-                directoryNode = new TreeNode(getFolderPrefix() + " " + folderIndexString);
+                directoryNode = new TreeNode(getFolderPrefix() + folderIndexString);
             }
 
             foreach (var folder in Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly).Select((name, index) => (name, index)))
             {
-                directoryNode.Nodes.Add(CreateDirectoryNode(folder.name, int.Parse(getStartingNumber()) + folder.index, AddLeadingZero(folder.index + 1)));
+                directoryNode.Nodes.Add(CreateDirectoryNode(folder.name, folder.index+1));
             }
             foreach (var file in Directory.GetFiles(path, "*" + selectedFileExtension, SearchOption.TopDirectoryOnly).Select((name, index) => (name, index)))
             {
                 string fileNum = AddLeadingZero(file.index+1);
                 string currentFileExtension = Path.GetExtension(file.name);
-                directoryNode.Nodes.Add(new TreeNode(getShowName() + " - " + getFileSeasonPrefix() + folderSeasonNumber + getFileEpisodePrefix() + fileNum + currentFileExtension));
+                directoryNode.Nodes.Add(new TreeNode(directoryNode.Text + getFilePrefix() + fileNum + currentFileExtension));
             }
             return directoryNode;
         }
