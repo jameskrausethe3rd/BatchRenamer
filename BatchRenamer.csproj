@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8FE0D632-4DAE-4703-A0A4-ED7BA8D434EE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GUITest</RootNamespace>
-    <AssemblyName>GUITest</AssemblyName>
+    <RootNamespace>BatchRenamer</RootNamespace>
+    <AssemblyName>Batch Renamer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -65,6 +65,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

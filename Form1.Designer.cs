@@ -264,7 +264,7 @@ namespace BatchRenamer
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(682, 636);
+            this.ClientSize = new System.Drawing.Size(682, 547);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.fileSeasonPrefix);
             this.Controls.Add(this.showName);
