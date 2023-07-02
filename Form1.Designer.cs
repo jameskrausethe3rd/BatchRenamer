@@ -31,24 +31,29 @@ namespace BatchRenamer
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btn_OpenFolder = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.folderSeasonPrefix = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.fileEpisodePrefix = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lbl_userSelection = new System.Windows.Forms.Label();
             this.btn_rename = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.startSeasonNumber = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox4_fileExtension = new System.Windows.Forms.ComboBox();
+            this.fileExtension = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.label7 = new System.Windows.Forms.Label();
+            this.showName = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.fileSeasonPrefix = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btn_OpenFolder
             // 
+            this.btn_OpenFolder.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_OpenFolder.Location = new System.Drawing.Point(12, 12);
             this.btn_OpenFolder.Name = "btn_OpenFolder";
             this.btn_OpenFolder.Size = new System.Drawing.Size(153, 39);
@@ -57,71 +62,78 @@ namespace BatchRenamer
             this.btn_OpenFolder.UseVisualStyleBackColor = true;
             this.btn_OpenFolder.Click += new System.EventHandler(this.button1_Click);
             // 
-            // comboBox1
+            // folderSeasonPrefix
             // 
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.folderSeasonPrefix.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.folderSeasonPrefix.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.folderSeasonPrefix.FormattingEnabled = true;
+            this.folderSeasonPrefix.Items.AddRange(new object[] {
             "S",
             "Series",
             "Season"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 103);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(138, 21);
-            this.comboBox1.TabIndex = 1;
-            this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
+            this.folderSeasonPrefix.Location = new System.Drawing.Point(12, 285);
+            this.folderSeasonPrefix.Name = "folderSeasonPrefix";
+            this.folderSeasonPrefix.Size = new System.Drawing.Size(246, 32);
+            this.folderSeasonPrefix.TabIndex = 1;
+            this.folderSeasonPrefix.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 87);
+            this.label1.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(8, 260);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.Size = new System.Drawing.Size(189, 22);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Folder Prefix";
+            this.label1.Text = "Folder Season Prefix";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 127);
+            this.label2.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(8, 408);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 13);
+            this.label2.Size = new System.Drawing.Size(171, 22);
             this.label2.TabIndex = 3;
-            this.label2.Text = "File Prefix";
+            this.label2.Text = "File Episode Prefix";
             // 
-            // comboBox2
+            // fileEpisodePrefix
             // 
-            this.comboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.fileEpisodePrefix.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileEpisodePrefix.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.fileEpisodePrefix.FormattingEnabled = true;
+            this.fileEpisodePrefix.Items.AddRange(new object[] {
             "E",
             "Episode"});
-            this.comboBox2.Location = new System.Drawing.Point(12, 143);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(138, 21);
-            this.comboBox2.TabIndex = 4;
-            this.comboBox2.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
+            this.fileEpisodePrefix.Location = new System.Drawing.Point(13, 433);
+            this.fileEpisodePrefix.Name = "fileEpisodePrefix";
+            this.fileEpisodePrefix.Size = new System.Drawing.Size(246, 32);
+            this.fileEpisodePrefix.TabIndex = 4;
+            this.fileEpisodePrefix.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(9, 64);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 13);
+            this.label3.Size = new System.Drawing.Size(151, 22);
             this.label3.TabIndex = 5;
             this.label3.Text = "Selected Folder:";
             // 
             // lbl_userSelection
             // 
             this.lbl_userSelection.AutoSize = true;
-            this.lbl_userSelection.Location = new System.Drawing.Point(89, 64);
+            this.lbl_userSelection.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_userSelection.Location = new System.Drawing.Point(149, 63);
             this.lbl_userSelection.Name = "lbl_userSelection";
-            this.lbl_userSelection.Size = new System.Drawing.Size(122, 13);
+            this.lbl_userSelection.Size = new System.Drawing.Size(216, 22);
             this.lbl_userSelection.TabIndex = 6;
             this.lbl_userSelection.Text = "Please make a selection";
             // 
             // btn_rename
             // 
+            this.btn_rename.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_rename.Location = new System.Drawing.Point(180, 12);
             this.btn_rename.Name = "btn_rename";
             this.btn_rename.Size = new System.Drawing.Size(153, 39);
@@ -130,11 +142,12 @@ namespace BatchRenamer
             this.btn_rename.UseVisualStyleBackColor = true;
             this.btn_rename.Click += new System.EventHandler(this.btn_rename_Click);
             // 
-            // comboBox3
+            // startSeasonNumber
             // 
-            this.comboBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.startSeasonNumber.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.startSeasonNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.startSeasonNumber.FormattingEnabled = true;
+            this.startSeasonNumber.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -145,77 +158,130 @@ namespace BatchRenamer
             "8",
             "9",
             "10"});
-            this.comboBox3.Location = new System.Drawing.Point(12, 183);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(138, 21);
-            this.comboBox3.TabIndex = 8;
-            this.comboBox3.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
+            this.startSeasonNumber.Location = new System.Drawing.Point(12, 141);
+            this.startSeasonNumber.Name = "startSeasonNumber";
+            this.startSeasonNumber.Size = new System.Drawing.Size(246, 32);
+            this.startSeasonNumber.TabIndex = 8;
+            this.startSeasonNumber.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 167);
+            this.label4.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(8, 114);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(122, 13);
+            this.label4.Size = new System.Drawing.Size(216, 22);
             this.label4.TabIndex = 9;
             this.label4.Text = "Starting Season Number";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 207);
+            this.label5.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(8, 187);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(141, 13);
+            this.label5.Size = new System.Drawing.Size(250, 22);
             this.label5.TabIndex = 10;
             this.label5.Text = "Rename files with extension:";
             // 
-            // comboBox4_fileExtension
+            // fileExtension
             // 
-            this.comboBox4_fileExtension.Enabled = false;
-            this.comboBox4_fileExtension.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox4_fileExtension.FormattingEnabled = true;
-            this.comboBox4_fileExtension.Location = new System.Drawing.Point(12, 223);
-            this.comboBox4_fileExtension.Name = "comboBox4_fileExtension";
-            this.comboBox4_fileExtension.Size = new System.Drawing.Size(138, 21);
-            this.comboBox4_fileExtension.TabIndex = 11;
-            this.comboBox4_fileExtension.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
+            this.fileExtension.Enabled = false;
+            this.fileExtension.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileExtension.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.fileExtension.FormattingEnabled = true;
+            this.fileExtension.Location = new System.Drawing.Point(13, 212);
+            this.fileExtension.Name = "fileExtension";
+            this.fileExtension.Size = new System.Drawing.Size(245, 32);
+            this.fileExtension.TabIndex = 11;
+            this.fileExtension.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(177, 87);
+            this.label6.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(280, 114);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 13);
+            this.label6.Size = new System.Drawing.Size(82, 22);
             this.label6.TabIndex = 12;
             this.label6.Text = "Preview:";
             // 
             // treeView1
             // 
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeView1.Location = new System.Drawing.Point(180, 103);
+            this.treeView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.treeView1.Location = new System.Drawing.Point(284, 141);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(153, 141);
+            this.treeView1.Size = new System.Drawing.Size(386, 176);
             this.treeView1.TabIndex = 13;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(9, 478);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(112, 22);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Show Name";
+            // 
+            // showName
+            // 
+            this.showName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.showName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.showName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.showName.Location = new System.Drawing.Point(12, 503);
+            this.showName.Name = "showName";
+            this.showName.Size = new System.Drawing.Size(246, 29);
+            this.showName.TabIndex = 16;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(8, 332);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(165, 22);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "File Season Prefix";
+            // 
+            // fileSeasonPrefix
+            // 
+            this.fileSeasonPrefix.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.fileSeasonPrefix.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.fileSeasonPrefix.FormattingEnabled = true;
+            this.fileSeasonPrefix.Items.AddRange(new object[] {
+            "S",
+            "Series",
+            "Season"});
+            this.fileSeasonPrefix.Location = new System.Drawing.Point(12, 359);
+            this.fileSeasonPrefix.Name = "fileSeasonPrefix";
+            this.fileSeasonPrefix.Size = new System.Drawing.Size(246, 32);
+            this.fileSeasonPrefix.TabIndex = 17;
             // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(345, 258);
+            this.ClientSize = new System.Drawing.Size(682, 636);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.fileSeasonPrefix);
+            this.Controls.Add(this.showName);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.comboBox4_fileExtension);
+            this.Controls.Add(this.fileExtension);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.startSeasonNumber);
             this.Controls.Add(this.btn_rename);
             this.Controls.Add(this.lbl_userSelection);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.fileEpisodePrefix);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.folderSeasonPrefix);
             this.Controls.Add(this.btn_OpenFolder);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -232,20 +298,24 @@ namespace BatchRenamer
         #endregion
 
         private System.Windows.Forms.Button btn_OpenFolder;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox folderSeasonPrefix;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox fileEpisodePrefix;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lbl_userSelection;
         private System.Windows.Forms.Button btn_rename;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox startSeasonNumber;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox4_fileExtension;
+        private System.Windows.Forms.ComboBox fileExtension;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox showName;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox fileSeasonPrefix;
     }
 }
 
