@@ -46,7 +46,7 @@ namespace BatchRenamer
         /// <summary>
         /// Renames the files in the <i>userPath</i> using the <i>filePrefix</i>.
         /// </summary>
-        static void RenameFiles(UserParams p)
+        static void RenameFiles(UserParams p, string directoryNum = "")
         {
             //Loop through each file
             foreach (var file in GetFiles(p).Select((name, index) => (name, index)))
@@ -54,7 +54,9 @@ namespace BatchRenamer
                 string fileNum = AddLeadingZero(file.index + 1);
                 string fileExtension = Path.GetExtension(file.name);
                 string folderName = GetLastDirectoryName(p.userPath);
-                string newFileName = Path.Combine(p.userPath, ($"{folderName}{p.filePrefix}" + fileNum + fileExtension));
+                string fileSeasonPrefix = p.fileSeasonPrefix;
+                string showName = p.showName;
+                string newFileName = Path.Combine(p.userPath, (showName + $" - {fileSeasonPrefix + directoryNum}{p.filePrefix}" + fileNum + fileExtension));
                 File.Move(file.name, newFileName);
             }
         }
@@ -66,7 +68,7 @@ namespace BatchRenamer
             foreach (var directory in GetDirectories(p.userPath).Select((name, index) => (name, index)))
             {
                 string directoryNum = AddLeadingZero(directory.index + int.Parse(p.startingNumber));
-                string newPath = Path.Combine(p.userPath, ($"{p.folderPrefix}" + directoryNum));
+                string newPath = Path.Combine(p.userPath, ($"{p.folderPrefix} " + directoryNum));
 
                 //Check if directory exists
                 if (Directory.Exists(directory.name) && (directory.name != newPath))
@@ -75,11 +77,10 @@ namespace BatchRenamer
                 }
 
                 //Saves the current path, updates the <i>userPath</i> for <i>p</i>, renames the files, then sets <i>userPath</i> back to <i>oldPath</i>.
-                //This is done because if we just update the path, the folders will be nested in each other. And making a second object just for path takes
-                //more memory.
+                //This is done because if we just update the path, the folders will be nested in each other.
                 string oldPath = p.userPath;
                 p.userPath = newPath;
-                RenameFiles(p);
+                RenameFiles(p, directoryNum);
                 p.userPath = oldPath;
             }
         }
